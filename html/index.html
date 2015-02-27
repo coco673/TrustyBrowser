@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="fr">
+	<head>
+	 	<meta charset="utf-8">
+	 	<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Trusty Browser</title>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" type="text/css">
+		<style type="text/css">
+			a, button { outline: 0 !important; text-decoration: none !important; }
+			body { font-family: Arial Narrow,Helvetica,Arial,sans-serif !important; }
+			dt { overflow: visible !important; width: 170px !important; margin-right: 8px;}
+			html { overflow-y: scroll; }
+			@media (max-width: 500px) {
+				.responsive-table-line td:before { content: attr(data-title); }
+				.responsive-table-line table,
+				.responsive-table-line thead,
+				.responsive-table-line tbody,
+				.responsive-table-line th,
+				.responsive-table-line td,
+				.responsive-table-line tr {
+					display: block;
+				}
+				.responsive-table-line thead tr {
+					display:none;
+				}
+				.responsive-table-line td {
+					position: relative;
+					border: 0px solid transparent;
+					padding-left: 35% !important;
+					white-space: normal;
+					text-align:left;
+				}
+				.responsive-table-line td:before {
+					position: absolute;
+					top: 0px;
+					left: 0px;
+					width: 30%;
+					padding-right: 15px;
+					height:100%;
+					white-space: nowrap;
+					text-overflow: ellipsis !important;
+					overflow:hidden !important;
+					text-align:left;
+					background-color:#ffffff;
+					padding:2px;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<!-- NOSCRIPT -->
+		<noscript>
+			<div id="noscript" class="alert alert-danger">
+				<p>Trusty Browser requiert l'activation de <strong>Javacript</strong> pour fonctionner correctement.</p>
+			</div>
+		</noscript>
+		<!-- FIN NOSCRIPT -->
+		<!-- NO COOKIE -->
+		<div id="nocookie" class="alert alert-danger" style="display: none">
+			<p>Trusty Browser requiert l'utilisation des <strong>cookies</strong> pour fonctionner correctement.</p>
+		</div>
+		<!-- FIN NO COOKIE -->
+		<!-- SCRIPT -->
+		<div id="container" class="container-fluide" style="margin: 0% 3% 0% 3%; display:none">
+			<!-- HEADER -->
+			<div class="page-header">
+	  			<span class="glyphicon glyphicon-sunglasses" style="font-size:60px; margin-left: 1%; margin-top: 0.5%; float:left"></span>
+	  			<h1 style="margin-left:8%"><a href="/" style="text-decoration:none;color: #344F69;">Trusty Browser</a><br><small class="hidden-xs" style="font-size: medium">Audit d'implémentation SSL/TLS pour navigateur web</small></h1>
+			</div>
+			<!-- FIN HEADER -->
+			<br>
+			<!-- CONTENU -->
+			<div role="tabpanel">
+				<!-- NAV -->
+				<ul class="nav nav-pills" role="tablist">
+					<li role="presentation" class="active" ><a href="#audit" aria-controls="audit" role="tab" data-toggle="tab">Audit</a></li>
+					<li role="presentation"><a href="#apropos" aria-controls="apropos" role="tab" data-toggle="tab">À propos</a></li>
+					<li role="presentation"><a href="#stats" aria-controls="stats" role="tab" data-toggle="tab">Statistiques</a></li>
+				</ul>
+				<!-- FIN NAV -->
+				<br><br>
+				<div class="tab-content">
+					<!-- HOME -->
+					<div id="audit" role="tabpanel" class="tab-pane fade in active">
+						<!-- INFORMATIONS TECHNIQUES -->
+						<div id="technical" class="panel panel-primary">
+						    <div class="panel-heading" id="technical-header">
+						      	<h4 class="panel-title">
+							        <a data-toggle="collapse" data-parent="#accordion" href="#technical-content" aria-expanded="true" aria-controls="technical-content">
+							          	<span class="glyphicon glyphicon-cog" style="margin-right: 1%"></span> Informations techniques<span class="caret pull-right"></span>
+							        </a>
+						      	</h4>
+					    	</div>
+						    <div id="technical-content" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="technical-header">
+						      	<div class="panel-body">
+						      		<div class="row">
+						      			<div class="col-md-3">
+								        	<dl class="dl-horizontal">
+												<dt>Navigateur :</dt><dd id="browser"></dd>
+												<dt>Système d'exploitation :</dt><dd id="os"></dd>
+												<dt>Adresse IP :</dt><dd id="ip"></dd>
+											</dl>
+										</div>
+										<div class="col-md-3">
+											<dl class="dl-horizontal">
+											</dl>
+										</div>
+									</div>
+						      	</div>
+						    </div>
+						</div>
+						<!-- FIN INFORMATIONS TECHNIQUES -->
+						<!-- TESTS -->
+						<div id="tests" class="panel panel-primary" style="font-size: small">
+							<div class="panel-heading" id="tests-header">
+						      	<h4 class="panel-title">
+							        <a data-toggle="collapse" data-parent="#accordion" href="#tests-content" aria-expanded="true" aria-controls="tests-content">
+							          	<span class="glyphicon glyphicon-stats" style="margin-right: 1%"></span> Tests<span class="caret pull-right"></span>
+							        </a>
+						      	</h4>
+					    	</div>
+					    	<div id="tests-content" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="tests-header">
+						  		<div class="panel-body" id="test" style="display: none">
+						  			<div id="global-result" style="display: none" class="alert">
+						  				<p><strong><span id="score-icon"></span><span style="margin-left: 2%">Votre navigateur obtient un score de <span id="score" style="font-size: large"></span> sur 100.</span></strong></p>
+					  				</div>
+						  			<div id="error" style="display: none" class="alert alert-danger">
+						  				<p><span class="glyphicon glyphicon-remove"></span><span style="margin-left: 2%">Une erreur est survenue : impossible d'accéder aux résultats.</span></p>
+					  				</div>
+					  				<div id="no-result" style="display: none" class="alert alert-warning">
+						  				<p><span class="glyphicon glyphicon-warning-sign"></span><span style="margin-left: 2%">Aucun test n'est actuellement disponible.</span></p>
+					  				</div>
+					  				<div id="progress" style="display: none">
+										<div class="alert"><p>Tests en cours...</p></div>
+						  				<div class="progress">
+						  					<div id="progress-bar" class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%; min-width: 2em">
+						    					0%</div>
+										</div>
+									</div>
+									<div id="tags" class="responsive-table-line" style="display:none">
+									</div>
+								</div>
+							</div>
+						</div>
+						<div>
+							<button type="button" class="btn btn-primary pull-right" onclick="window.print()"><span class="glyphicon glyphicon-print"></span> Imprimer</button>
+						</div>
+						<!-- FIN TESTS -->
+					</div>
+					<!-- FIN HOME -->
+					<!-- A PROPOS -->
+					<div id="apropos" role="tabpanel" class="tab-pane fade">
+						<strong>Type de risque</strong> :<br>
+						<span class="label label-default">Intégrité</span> : Le contenu de l'échange peut être altéré<br>
+						<span class="label label-default">Confidentialité</span> : Le secret de l'échange n'est pas assuré<br>
+						<span class="label label-default">Authentification</span> : L'identité de l'expéditeur n'est pas vérifiée<br>
+						<br><strong>Criticité</strong> : <br>
+						<span class="label label-success">Limitée</span> : Difficile à exploiter<br>
+						<span class="label label-warning">Importante</span> : Facile à exploiter sous certaines conditions<br>
+						<span class="label label-danger">Maximale</span> : Très facile à exploiter<br>
+					</div>
+					<!-- FIN A PROPOS -->
+					<!-- STATISTIQUES -->
+					<div id="stats" role="tabpanel" class="tab-pane fade">
+						<div id="charts" class="row"></div>
+					</div>
+					<!-- FIN STATISTIQUES -->
+				</div>
+
+			</div>
+
+			<!-- FIN CONTENU -->
+		</div>
+		<!-- FIN SCRIPT -->
+		<div style="display:none">Blazing Unicorns ;) - 2015</div>
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.2/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/highcharts/4.0.4/highcharts.js"></script>
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/UAParser.js/0.7.3/ua-parser.min.js"></script>
+		<script type="text/javascript">
+			"use strict";
+			/**
+			 * Dessine un diagramme circulaire dans block
+			 * @param block La div dans laquelle dessiner
+			 * @param chart Un objet contenant les informations à afficher
+			 */
+			function drawPie(block, chart) {
+				block.highcharts({
+			        title: { text: chart.title },
+			        plotOptions: {
+			            pie: {
+			                dataLabels: { format: "<b>{point.name}</b>: {point.percentage:.1f} %" }
+			            }
+			        },
+			        tooltip: { enabled: false },
+			        credits: { enabled: false },
+			        series: [{
+			            type: "pie",
+			        	showInLegend: false,
+			            data: chart.data
+			        }]
+			    });
+			}
+			/**
+			 * Dessine un diagramme en barre dans block
+			 * @param block La div dans laquelle dessiner
+			 * @param chart Un objet contenant les informations à afficher
+			 */
+			function drawBar(block, chart) {
+				block.highcharts({
+                	chart: { type: "column" },
+                	title: { text: chart.title },
+                	xAxis: { type: "category" },
+                	yAxis: { title: { text: chart.yAxis }},
+                	legend: { enabled: false },
+                	tooltip: { enabled: false },
+			        credits: { enabled: false },
+	                series: [{
+	                    colorByPoint: true,
+	                    data: chart.data
+	                }]
+            	});
+        	}
+			/**
+			 * Dessine un ensemble de diagrammes
+			 * @param block La div dans laquelle dessiner
+			 * @param charts Un tableau d'objets représentant les diagrammes à dessiner
+			 */
+			function drawAllCharts(charts) {
+				$.each(charts, function(i, chart) {
+					var column = $("<div class=\"col-md-3 col-sm-6 col-xs-12 well  well-sm\"></div>");
+					$("#charts").append(column);
+					if (chart.type == "pie") {
+						drawPie(column, chart);
+					} else if (chart.type == "column"){
+						drawBar(column, chart);
+					} else {
+						return true;
+					}
+				});
+			}
+			/**
+			 * Récupère et formate les cookies
+			 * @return Les cookies
+			 */
+			function unpack() {
+				var hex = document.cookie.split("=")[1];
+				// cookies désactivés, on stope
+				if (hex === undefined) {
+					$("#nocookie").show();
+					throw new Error("Trusty Browser requiert l'autorisation des cookies");
+				} else {
+					$("#container").show();
+					var r = "";
+					// conversion hex en string JSON
+					$.each(('' + hex).match(/../g), function() {
+	        			r += String.fromCharCode('0x' + this)
+	    			});
+	    			// conversion en objet
+	    			return $.parseJSON(r);
+				}
+			}
+			/**
+			 * Lance tous les tests
+			 * @param tests Un tableau de tests
+			 * @param token Le token du client
+			 * @param report port utilisé pour obtenir le rapport
+			 * @param calls Un tableau permettant de récupérer les tests
+			 * @param timeout Durée d'attente pour lancer la demande au serveur
+			 */
+			function runTests(tests, token, report, calls, timeout) {
+				window.setTimeout(function() {
+					calls.push($.ajax({
+						url: "https://" + window.location.hostname,
+						type: "POST",
+						data: {
+							token: token
+						},
+						success: function(data) {
+							var step = 100 / tests.length;
+							$.each(tests, function(i, port) {
+								calls.push($.ajax({
+									url: "https://" + window.location.hostname + ":" + port + "/",
+									type: "GET",
+									cache: false,
+									data: {
+										token: token
+									},
+									complete: function() {
+										// Fait avancer la barre de progression
+										var progress = parseFloat($("#progress-bar").attr("aria-valuenow")) + step;
+										$("#progress-bar").attr("aria-valuenow", progress)
+										.text(Math.round(progress) + "%")
+										.css("width", progress + "%");
+									}
+								}));
+							});
+							$.when.apply($, calls).always(function() {
+								window.setTimeout(function() {
+									$.ajax({
+										url: "https://" + window.location.hostname + ":" + report + "/",
+										type: "POST",
+										cache: false,
+										data: {
+											token: token
+										},
+										success: function(data) {
+											formatResults(data);
+										},
+										error: function() {
+											$("#progress").fadeOut(TRANSITION_TIME, function() {
+												$("#error").fadeIn(TRANSITION_TIME);
+											});
+										}
+								 	});
+								 }, 2000);
+							});
+						},
+						error: function() {
+							runTests(tests, token, report, calls, 2000);
+						}
+				 	}));
+				}, timeout);
+			}
+			/**
+			 * Durée de transition
+			 */
+			var TRANSITION_TIME = 1000;
+			/**
+			 * Met en forme les résultats obtenus lors des tests
+			 * @param data L'objet retourné en AJAX
+			 */
+			function formatResults(data) {
+				var score = 0;
+				var criticity = 0;
+				var resultLabels = {
+					1 : ["success", "Sécurisé", "glyphicon glyphicon-ok"],
+					0 : ["danger", "Non sécurisé", "glyphicon glyphicon-remove"]
+				};
+				var scoreLabels = {
+					25 : ["alert-danger", "glyphicon glyphicon-remove"],
+					50 : ["alert-warning", "glyphicon glyphicon-minus"],
+					75 : ["alert-info", "glyphicon glyphicon-plus"],
+					100 : ["alert-success", "glyphicon glyphicon-ok"]
+				};
+				var criticityLabels = {
+					2 : "Négligeable",
+					3 : "Limitée",
+					5 : "Importante",
+					8 : "Maximale"
+				};
+				data.sort(function(a, b) {
+					if (a.tag < b.tag) {
+						return -1;
+					} else if (a.tag > b.tag) {
+						return 1;
+					} else if (a.name < b.name) {
+						return -1;
+					} else if (a.name > b.name) {
+						return 1;
+					} else {
+						return 0;
+					}
+				});
+				var currentTag = null;
+				var currentId = null;
+				$.each(data, function(i, test) {
+					score += test.result * test.criticity;
+					criticity += test.criticity;
+					if (currentTag != test.tag) {
+						currentTag = test.tag;
+						currentId = currentTag.replace( /[\.,-\/#!$%\^&\*;:{}=\-_`~()'\s]/g, "");
+						$("#tags").append(
+							"<div class=\"panel panel-default\">" +
+							"<div class=\"panel-heading\"><h5><strong>" + currentTag + "</strong></h5></div>" +
+							"<table class=\"table table-bordered table-condensed table-body-center\">" + 
+								"<thead><tr>" +
+					                "<th class=\"text-center\ test\" style=\"width: 12%\">Test</th>" +
+					                "<th class=\"text-center\" style=\"width: 20%\">Description</th>" +
+					                "<th class=\"text-center\" style=\"width: 5%\">Criticité</th>" +
+					                "<th class=\"text-center\" style=\"width: 8%\">Résultat</th>" +
+					                "<th class=\"text-center\" style=\"width: 54%\">Commentaire</th>" +
+					            "</tr></thead>" +
+						        "<tbody id=\"" + currentId + "\"></tbody>" +
+						    "</table></div>"
+						);
+					}
+					$("#" + currentId).append(
+						"<tr class=\"" + resultLabels[test.result][0] + "\">" +
+							"<td class=\"tests\" data-title=\"Test\">" + test.name + "</td>" +
+							"<td data-title=\"Description\">" + test.description + "</td>" +
+							"<td data-title=\"Criticité\" class=\"text-center\">" + criticityLabels[test.criticity] + "</td>" +
+							"<td data-title=\"Résultat\" class=\"text-center\"><span class=\"" + resultLabels[test.result][2] + "\"><span> <b>" + resultLabels[test.result][1] + "</b></td>" +
+							"<td data-title=\"Commentaire\">" + test.comment + "</td>" +
+						"</tr>"
+					);
+				});
+				score = Math.round((score / criticity) * 100);
+				$.each(scoreLabels, function(i, step) {
+					if (score <= i) {
+						$("#global-result").addClass(scoreLabels[i][0]);
+						$("#score-icon").attr("class", scoreLabels[i][1]);
+						return false;
+					}
+				});
+				$("#score").text(score);
+				$("#progress").fadeOut(TRANSITION_TIME, function() {
+					$("#tags").fadeIn(TRANSITION_TIME);
+					$("#global-result").fadeIn(TRANSITION_TIME);
+				});
+			}
+			/**
+			 * Récupère et affiche les infos issues du User-Agent
+			 */
+			function setTechnicalInformations(ip, sni, npn) {
+				var info = (new UAParser()).getResult();
+				$("#browser").text(info.browser.name + " " + info.browser.version);
+				$("#os").text((info.os.name ? info.os.name : "inconnu") + " " + (info.os.version ? info.os.version : ""));
+				$("#ip").text(ip ? ip : "Inconnue");
+			}
+			/**
+			 * Lance la phase d'audit
+			 * @param tests Une liste de ports utilisés par les tests
+			 * @param token Le token du client
+			 * @param report Le port utilisé pour l'obtention du rapport
+			 */
+			function audit(tests, token, report) {
+				$("#test").show();
+				if (tests.length > 0) {
+					$("#progress").fadeIn(TRANSITION_TIME);
+					var calls = [];
+					runTests(tests, token, report, calls, 0);
+				} else {
+					$("#no-result").fadeIn(TRANSITION_TIME);
+				}
+			}
+			/**
+			 * Main
+			 */
+			function main() {
+				var params = unpack();
+				setTechnicalInformations(params.ip);
+				drawAllCharts(params.stats);
+				audit(params.tests, params.token, params.report)
+			}
+			$(document).ready(main);
+		</script>
+	</body>
+</html>

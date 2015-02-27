@@ -1,0 +1,15 @@
+
+
+Démarche à suivre pour créer une PKI contenant une autorité de certification
+racine, intermediaire et un certificat serveur :
+
+1) lancer le script CreateACR.sh pour générer l'architecture necessaire ainsi
+que l'autorité racine.
+
+2) lancer le script de génération de requête d'une autorité intermediaire 
+generate_req_ACI.sh
+
+3) lancer le script de signature de l'autorité racine sur la requête 
+précedement générée et la clef de l'autorité racine.
+
+4) générer des certificats serveur avec le script generate_cert.sh
